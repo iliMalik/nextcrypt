@@ -13,12 +13,13 @@ const CandleChart = () => {
       height: 400,
     });
 
-    const candleSeries = chart.addSeries(BarSeries);
-
+    const barSeries = chart.addSeries(BarSeries);
     const fetchData = async () => {
       const res = await axios.get(
-        "https://api.binance.com/api/v3/klines?symbol=BTCUSDT&interval=1h&limit=100"
+        "https://api.binance.us/api/v3/klines?symbol=BTCUSDT&interval=1h&limit=100"
       );
+
+      console.log(res.data);
 
       const data = res.data.map((d: any) => ({
         time: d[0] / 1000,
@@ -28,7 +29,7 @@ const CandleChart = () => {
         close: parseFloat(d[4]),
       }));
 
-      candleSeries.setData(data);
+      barSeries.setData(data);
     };
 
     fetchData();
