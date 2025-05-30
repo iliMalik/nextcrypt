@@ -1,0 +1,121 @@
+.gridtitle {
+  background-color: #e0ffff;
+  margin-top: 0.5rem;
+  height: 2.6rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 0.5rem;
+  align-items: center;
+}
+.gridboxcenter {
+  display: flex;
+  flex-direction: row-reverse;
+  background-color: white;
+  align-items: center;
+  margin-top: 0;
+  padding-top: 0;
+  width: 20%;
+
+  gap: 0.5rem;
+  justify-content: space-between;
+  border: 1px solid black;
+  font-size: 0.9rem;
+  font-weight: bold;
+}
+.gridboxside {
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: stretch;
+  margin-top: 0;
+  padding-top: 0;
+  width: 40%;
+  padding: 0.5rem;
+  gap: 0.5rem;
+  justify-content: flex-start;
+}
+.formFooter {
+  display: flex;
+  flex-direction: row;
+  background-color: yellow;
+  align-items: center;
+  width: 100%;
+  padding: 0.5rem;
+  gap: 0.5rem;
+  justify-content: flex-end;
+  margin-top: 0.5rem;
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px,
+    rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px,
+    rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+}
+.formgrid {
+  display: inline-grid;
+  grid-template-columns: repeat(10, 5rem);
+  align-items: start;
+  background-color: #f0f0f5;
+  min-height: 5rem;
+  grid-auto-flow: row;
+  padding: 0.25rem;
+}
+
+.formrow {
+  display: grid;
+
+  align-items: left;
+  justify-content: flex-start;
+  grid-template-columns: min-content 1fr;
+  grid-template-rows: 3rem 1rem;
+  justify-content: start;
+
+  background-color: #e0e0eb;
+
+  margin-top: 1rem;
+  margin-left: 0.5rem;
+  padding: 0.2rem;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px,
+    rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
+}
+
+.formrow label {
+  display: inline-block;
+  width: auto;
+  margin-right: 10px;
+  text-decoration-thickness: 2rem;
+  grid-row: 1 / span 1;
+  grid-column: 1 / span 1;
+  white-space: nowrap;
+}
+
+.formrow input {
+  display: inline-block;
+  grid-row: 1 / span 1;
+  grid-column: 2 / span 2;
+  height: 100%;
+  width: 100%;
+  justify-self: stretch;
+}
+
+.formrow small {
+  display: inline-block;
+  grid-row: 2 / span 1;
+  grid-column: 1 / span 2;
+  color: red;
+  fontsize: 0.7rem;
+  text-transform: "lowercase";
+}
+
+.formHeader {
+  width: auto;
+  text-transform: uppercase;
+  background-color: bisque;
+}
+
+.search-bar-container {
+  padding-top: 20vh;
+  width: 100%;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 200px;
+}
