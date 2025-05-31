@@ -52,3 +52,21 @@ export interface Session {
   person_id: string;
   session_date: string;
 }
+
+export type DisorderResult = {
+  flag: boolean;
+  core_matched: number[];
+  others_matched: number[];
+  severity: number;
+  matched_count: number;
+  total_required: number;
+  note?: string;
+};
+
+export type ScreeningResult = {
+  status: string;
+  session_id: string;
+  results: {
+    [key: string]: DisorderResult;
+  };
+};
