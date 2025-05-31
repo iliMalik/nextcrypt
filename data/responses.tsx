@@ -5,6 +5,8 @@ const API_BASE_URL = "https://bcbc-py.vercel.app";
 export async function addResponses(data: Responses): Promise<void> {
   const url = `${API_BASE_URL}/responses/`;
 
+  console.log("sending:", data);
+
   const response = await fetch(url, {
     method: "POST",
     headers: {
