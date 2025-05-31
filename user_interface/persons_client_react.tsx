@@ -114,7 +114,17 @@ export default function PersonsClient({ persons }: PropsPersons) {
               </button>
             )}
           />
-          <Column field="session_date" header="Start Time" />
+          <Column
+            field="session_date"
+            header="Start Time"
+            body={(rowData: Session) =>
+              new Date(rowData.session_date).toLocaleString("en-US", {
+                timeZone: "America/New_York",
+                dateStyle: "short",
+                timeStyle: "short",
+              })
+            }
+          />
         </DataTable>
       </div>
     );
