@@ -43,7 +43,6 @@ export interface PropsQuestions {
 }
 
 export interface Responses {
-  session_id: string;
   answers: { [key: string]: string };
 }
 

@@ -4,7 +4,7 @@ import { Session, Person, Question } from "@/lib/definitions";
 import { Dialog } from "primereact/dialog";
 import { ProgressBar } from "primereact/progressbar";
 import { Button } from "primereact/button";
-import { addResponses } from "@/data/responses"; // Ensure this function is defined to handle responses
+import { addResponses } from "@/data/responses";
 
 type Props = {
   visible: boolean;
@@ -35,58 +35,159 @@ export default function StartAssessment({
   };
 
   const handleSubmit = () => {
-    // Here you would typically send the responses to your backend
     const preparedResponses = {
       session_id: session.session_id,
       answers: responses,
     };
     console.log("Submitting responses:", preparedResponses);
-    // Simulate a submission to the backend
     addResponses(preparedResponses);
-    onHide(); // Close the dialog after submission
-    setCurrentIndex(0); // Reset index for next assessment
-    setResponses({}); // Reset responses for next assessment
+    handleClose();
   };
-  const currentQuestion = questions[currentIndex];
 
   const handleClose = () => {
     onHide();
-    setCurrentIndex(0); // Reset index for next assessment
-    setResponses({}); // Reset responses for next assessment
+    setCurrentIndex(0);
+    setResponses({});
   };
+
+  const currentQuestion = questions[currentIndex];
+
+  // Correct progress calculation: currentIndex out of total questions
+  const progressValue =
+    questions.length === 0 ? 0 : (currentIndex / questions.length) * 100;
+
+  // Helper to format date string in EST (New York) timezone
+  const formatDateToEST = (dateString: string): string => {
+    const date = new Date(dateString);
+    const options: Intl.DateTimeFormatOptions = {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit",
+      timeZone: "America/New_York",
+      hour12: true,
+    };
+    return new Intl.DateTimeFormat("en-US", options).format(date);
+  };
+
   return (
     <Dialog
       header={`Assessment for ${person.person_first_name}`}
       visible={visible}
       onHide={handleClose}
-      style={{ width: "50vw" }}
+      style={{ width: "55vw", maxWidth: "600px", minHeight: "350px" }}
       modal
+      className="custom-dialog"
+      blockScroll
     >
-      <p>Session Date: {session.session_date}</p>
-
-      {currentQuestion ? (
+      <div
+        style={{
+          padding: "1.5rem",
+          backgroundColor: "#f9f9fb",
+          borderRadius: "8px",
+          boxShadow: "0 4px 12px rgb(0 0 0 / 0.1)",
+          display: "flex",
+          flexDirection: "column",
+          gap: "1.5rem",
+          minHeight: "280px",
+          justifyContent: "space-between",
+        }}
+      >
         <div>
-          <p>
-            {" "}
-            Question {currentIndex + 1} of {questions.length}
+          <p
+            style={{
+              fontWeight: "600",
+              marginBottom: "0.25rem",
+              color: "#444",
+            }}
+          >
+            Session Date: {formatDateToEST(session.session_date)}
           </p>
-          <ProgressBar
-            value={Math.round((currentIndex + 1) / questions.length) * 100}
-            showValue={true}
-            style={{ height: "10px", marginBottom: "1rem" }}
-          />
-          <div>
-            <p>{currentQuestion.question_text}</p>
-            <Button onClick={() => handleAnswer("YES")}>Yes</Button>
-            <Button onClick={() => handleAnswer("NO")}>No</Button>
-          </div>
+
+          {currentQuestion ? (
+            <>
+              <p
+                style={{
+                  marginBottom: "0.25rem",
+                  fontSize: "1rem",
+                  fontWeight: "600",
+                  color: "#333",
+                }}
+              >
+                Question {currentIndex + 1} of {questions.length}
+              </p>
+              <ProgressBar
+                value={progressValue}
+                showValue={false}
+                style={{
+                  height: "12px",
+                  borderRadius: "6px",
+                  marginBottom: "1rem",
+                }}
+                color="#4caf50"
+              />
+              <p
+                style={{
+                  fontSize: "1.1rem",
+                  fontWeight: "500",
+                  marginBottom: "1rem",
+                  color: "#222",
+                }}
+              >
+                {currentQuestion.question_text}
+              </p>
+            </>
+          ) : (
+            <p
+              style={{
+                fontSize: "1.2rem",
+                fontWeight: "600",
+                color: "#444",
+                marginBottom: "2rem",
+              }}
+            >
+              All questions answered.
+            </p>
+          )}
         </div>
-      ) : (
-        <div>
-          <p>All questions answered.</p>
-          <button onClick={handleSubmit}>Submit</button>
+
+        <div
+          style={{
+            display: "flex",
+            justifyContent: currentQuestion ? "space-around" : "center",
+            gap: "1.5rem",
+          }}
+        >
+          {currentQuestion ? (
+            <>
+              <Button
+                label="Yes"
+                severity="success"
+                rounded
+                style={{ minWidth: "120px", fontWeight: "600" }}
+                onClick={() => handleAnswer("YES")}
+              />
+              <Button
+                label="No"
+                severity="danger"
+                rounded
+                style={{ minWidth: "120px", fontWeight: "600" }}
+                onClick={() => handleAnswer("NO")}
+              />
+            </>
+          ) : (
+            <Button
+              label="Submit"
+              severity="danger"
+              rounded
+              style={{ minWidth: "160px", fontWeight: "700" }}
+              onClick={handleSubmit}
+            />
+          )}
         </div>
-      )}
+      </div>
     </Dialog>
   );
 }
