@@ -3,3 +3,36 @@
 @import "primereact/resources/primereact.min.css"; /* Core styles */
 @import "primeicons/primeicons.css"; /* Icons */
 @import "primeflex/primeflex.css"; /* Optional: Grid system */
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+#__next {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+main {
+  flex: 1;
+}
+
+.layout-wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.layout-wrapper > main {
+  flex: 1;
+}
+
+.small-table .p-datatable-tbody > tr > td,
+.small-table .p-datatable-thead > tr > th {
+  padding: 4px 8px !important;
+  font-size: 13px;
+}

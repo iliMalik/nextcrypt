@@ -28,6 +28,11 @@ export default function Navigation_Main() {
       icon: "pi pi-question-circle",
       command: () => router.push("/questions"),
     },
+    {
+      label: "practice",
+      icon: "pi pi-question-circle",
+      command: () => router.push("/practice"),
+    },
   ];
 
   return (
